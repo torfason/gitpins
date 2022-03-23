@@ -8,7 +8,7 @@ Description: Quickly download an online resource and make it available
     for R as a local file. Repeated downloads are versioned using
     a local git repository, and if getting a document from the web
     is not successful, a previous local download is made available.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 
     digest,
@@ -17,7 +17,9 @@ Imports:
     jsonlite
 Suggests: 
     tibble,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    callr,
+    servr
 Config/testthat/edition: 3
 RoxygenNote: 7.1.2
 URL: https://github.com/torfason/gitpins

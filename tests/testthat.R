@@ -1,4 +1,4 @@
 library(testthat)
-library(gitpin)
+library(gitpins)
 
-test_check("gitpin")
+test_check("gitpins")
