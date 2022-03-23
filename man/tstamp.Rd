@@ -2,10 +2,17 @@
 % Please edit documentation in R/gitpin.R
 \name{tstamp}
 \alias{tstamp}
-\title{Convert datetime to sub-milli timestamp}
+\title{Convert datetime to sub-millisecond timestamp}
 \usage{
 tstamp(the_datetime)
 }
-\description{
-Convert datetime to sub-milli timestamp
+\arguments{
+\item{the_datetime}{A date variable}
 }
+\value{
+A character representation of \code{the_datetime} as a sub-millisecond timestamp
+}
+\description{
+Convert datetime to sub-millisecond timestamp
+}
+\keyword{internal}

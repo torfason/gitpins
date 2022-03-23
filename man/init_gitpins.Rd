@@ -6,6 +6,11 @@
 \usage{
 init_gitpins()
 }
-\description{
-Initialize gitpins repo
+\value{
+The path to the repo
 }
+\description{
+This function is called automatically as needed and should not
+need to be called by the user
+}
+\keyword{internal}

@@ -1,19 +1,43 @@
 
 .globals <- new.env()
 
-#' Convert datetime to sub-milli timestamp
+#' Convert datetime to sub-millisecond timestamp
+#'
+#' @param the_datetime A date variable
+#' @return A character representation of `the_datetime` as a sub-millisecond timestamp
+#' @md
+#' @keywords internal
 tstamp <- function(the_datetime) {
   strftime(the_datetime , "%Y-%m-%d %H:%M:%OS5")
 }
 
-#'
 #' Initialize gitpins repo
+#'
+#' This function is called automatically as needed and should not
+#' need to be called by the user
+#'
+#' @return The path to the repo
+#' @md
+#' @keywords internal
 init_gitpins <- function() {
   .globals$repo <- here::here("gitpins")
   gert::git_init(path=.globals$repo)
 }
 
 #' Download URL, add to gitpins repo, and return filename
+#'
+#' The `gitpin()` function downloads a URL to a local file in the `gitpins`
+#' folder inside your project (the currently fixed path is determined by
+#' `here("gitpins")`), and then returns the full file name name of the
+#' local file, which can be passed as an argument to any function that
+#' expects to read such a file.
+#'
+#' @param url The url do townload (or get a cached copy of)
+#' @param refresh_hours How old, in hours, can the locally cached copy be
+#'   before downloading a new version.
+#' @return The path of the locally downloaded file
+#'
+#' @md
 #' @export
 gitpin <- function(url, refresh_hours=12) {
   #url <- "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/boot/acme.csv"
@@ -83,8 +107,10 @@ gitpin <- function(url, refresh_hours=12) {
 }
 
 #' List available gitpins
+#'
 #' @param history Should full (git) history be returned?
 #' @return A `data.frame` with the timestamps and urls of available gitpins.
+#'
 #' @md
 #' @export
 list_gitpins <- function(history=FALSE) {
@@ -114,6 +140,9 @@ list_gitpins <- function(history=FALSE) {
   d.result
 }
 
+#' Clearing old gitpins is not currently implemented
+#' @md
+#' @keywords internal
 clear_old_gitpins <- function() {
   stop("not implemented")
 }

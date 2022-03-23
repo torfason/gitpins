@@ -6,6 +6,19 @@
 \usage{
 gitpin(url, refresh_hours = 12)
 }
+\arguments{
+\item{url}{The url do townload (or get a cached copy of)}
+
+\item{refresh_hours}{How old, in hours, can the locally cached copy be
+before downloading a new version.}
+}
+\value{
+The path of the locally downloaded file
+}
 \description{
-Download URL, add to gitpins repo, and return filename
+The \code{gitpin()} function downloads a URL to a local file in the \code{gitpins}
+folder inside your project (the currently fixed path is determined by
+\code{here("gitpins")}), and then returns the full file name name of the
+local file, which can be passed as an argument to any function that
+expects to read such a file.
 }
