@@ -1,0 +1,22 @@
+Package: gitpins
+Type: Package
+Title: Pin urls to local file and version with git
+Version: 0.1.0
+Author: Magnus Thor Torfason
+Maintainer: Magnus Thor Torfason <m@zulutime.net>
+Description: Quickly download an online resource and make it available
+    for R as a local file. Repeated downloads are versioned using
+    a local git repository, and if getting a document from the web
+    is not successful, a previous local download is made available.
+License: MIT
+Encoding: UTF-8
+Imports: 
+    digest,
+    gert,
+    here,
+    jsonlite
+Suggests: 
+    tibble,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.1.2
