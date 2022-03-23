@@ -6,6 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+Pin URLs to local file and version the pins with git. Repeated downloads
+are versioned using a local git repository, and if getting a document
+from the web is not successful, a previous local download is made
+available.
+
 ## The problem
 
 You want to quickly and easily process an online resource using R
@@ -114,17 +119,17 @@ complex retrieval operations.
 list_gitpins()
 #> Loading required namespace: tibble
 #> # A tibble: 2 × 2
-#>   timestamp                 url                                                 
-#>   <chr>                     <chr>                                               
-#> 1 2022-03-23 09:50:40.82209 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
-#> 2 2022-03-23 09:50:41.06999 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#>   timestamp                 url                                                                          
+#>   <chr>                     <chr>                                                                        
+#> 1 2022-03-23 17:07:54.55158 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 2 2022-03-23 17:07:54.90770 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 list_gitpins(history = TRUE)
 #> # A tibble: 3 × 2
-#>   timestamp                 url                                                 
-#>   <chr>                     <chr>                                               
-#> 1 2022-03-23 09:50:41.06999 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
-#> 2 2022-03-23 09:50:40.82209 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2022-03-23 09:50:40.47509 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#>   timestamp                 url                                                                          
+#>   <chr>                     <chr>                                                                        
+#> 1 2022-03-23 17:07:54.90770 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-03-23 17:07:54.55158 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2022-03-23 17:07:54.29960 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation

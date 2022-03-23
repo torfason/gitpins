@@ -6,10 +6,10 @@
 \alias{gitpins-package}
 \title{gitpins: Pin urls to local file and version with git}
 \description{
-Quickly download an online resource and make it available
-for R as a local file. Repeated downloads are versioned using
-a local git repository, and if getting a document from the web
-is not successful, a previous local download is made available.
+Pin URLs to local file and version the pins with git.
+Repeated downloads are versioned using a local git repository,
+and if getting a document from the web is not successful, a
+previous local download is made available.
 
 To get started, check out the help for the \code{\link[=gitpin]{gitpin()}} function, or take a
 look at the info on GitHub (see links below).

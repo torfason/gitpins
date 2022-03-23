@@ -4,10 +4,10 @@ Title: Pin urls to local file and version with git
 Version: 0.1.0
 Author: Magnus Thor Torfason
 Maintainer: Magnus Thor Torfason <m@zulutime.net>
-Description: Quickly download an online resource and make it available
-    for R as a local file. Repeated downloads are versioned using
-    a local git repository, and if getting a document from the web
-    is not successful, a previous local download is made available.
+Description: Pin URLs to local file and version the pins with git. 
+    Repeated downloads are versioned using a local git repository, 
+    and if getting a document from the web is not successful, a 
+    previous local download is made available.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 

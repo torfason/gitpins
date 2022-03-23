@@ -7,7 +7,7 @@
 gitpin(url, refresh_hours = 12)
 }
 \arguments{
-\item{url}{The url do townload (or get a cached copy of)}
+\item{url}{The URL do townload (or get a cached copy of)}
 
 \item{refresh_hours}{How old, in hours, can the locally cached copy be
 before downloading a new version.}

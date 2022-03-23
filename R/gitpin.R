@@ -32,7 +32,7 @@ init_gitpins <- function() {
 #' local file, which can be passed as an argument to any function that
 #' expects to read such a file.
 #'
-#' @param url The url do townload (or get a cached copy of)
+#' @param url The URL do townload (or get a cached copy of)
 #' @param refresh_hours How old, in hours, can the locally cached copy be
 #'   before downloading a new version.
 #' @return The path of the locally downloaded file
