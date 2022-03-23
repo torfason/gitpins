@@ -110,9 +110,9 @@ list_gitpins(history = TRUE)
 You can install the development version of gitpins like so:
 
 ``` r
-pak::pak("torfason/gitpin")
+pak::pak("torfason/gitpins")
 # or alternatively
-remotes::install_github("torfason/gitpin")
+remotes::install_github("torfason/gitpins")
 ```
 
 ## Related packages and feedback
