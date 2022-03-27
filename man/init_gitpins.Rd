@@ -2,12 +2,12 @@
 % Please edit documentation in R/gitpin.R
 \name{init_gitpins}
 \alias{init_gitpins}
-\title{Initialize gitpins repo}
+\title{Initialize gitpins repository}
 \usage{
 init_gitpins()
 }
 \value{
-The path to the repo
+The path to the repository
 }
 \description{
 This function is called automatically as needed and should not

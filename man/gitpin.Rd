@@ -2,12 +2,12 @@
 % Please edit documentation in R/gitpin.R
 \name{gitpin}
 \alias{gitpin}
-\title{Download URL, add to gitpins repo, and return filename}
+\title{Download URL, add to gitpins repository, and return filename}
 \usage{
 gitpin(url, refresh_hours = 12)
 }
 \arguments{
-\item{url}{The URL do townload (or get a cached copy of)}
+\item{url}{The URL do download (or get a cached copy of)}
 
 \item{refresh_hours}{How old, in hours, can the locally cached copy be
 before downloading a new version.}

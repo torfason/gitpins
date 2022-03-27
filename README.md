@@ -72,9 +72,9 @@ a parameter.
 Note that the return value of the `gitpin()` function is simply the full
 path to the local copy of the file. You can therefore use `gitpin()`
 with the original URL wherever you would have used the local path of the
-resource. The exact name of the file is constructed deterministically
-based on the URL (specifically, the base name is the `digest()` of the
-URL).
+resource. The exact name of the file is constructed in a deterministic
+way based on the URL (specifically, the base name is the `digest()` of
+the URL).
 
 ``` r
 # Uses a cached copy if a recent one is available (start of the url changed for privacy)
@@ -122,15 +122,15 @@ list_gitpins()
 #> # A tibble: 2 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-27 15:51:06.93807 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-03-27 15:51:06.73767 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 1 2022-03-27 18:10:07.50945 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-03-27 18:10:07.31000 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
 list_gitpins(history = TRUE)
 #> # A tibble: 3 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-27 15:51:06.93807 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-03-27 15:51:06.73767 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2022-03-27 15:51:06.31651 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2022-03-27 18:10:07.50945 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-03-27 18:10:07.31000 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2022-03-27 18:10:06.90967 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation
@@ -149,7 +149,7 @@ This package was inspired by the `pins` package, and in particular the
 `pin()` function. However, that function stores the actual local file in
 a system location rather than inside the project, so using it was not
 totally reliable. Also, it did not have the desired versioning
-propertiests. Thus, `gitpins` was born.
+properties. Thus, `gitpins` was born.
 
 For feature requests, bugs, or other feedback, feel free to file an
 issue.
