@@ -75,7 +75,7 @@ gitpin <- function(url, refresh_hours=12) {
   } else {
 
     tryCatch(
-      { dl_result <- utils::download.file(url, destfile_temp, quiet=TRUE) },
+      { dl_result <- curl::curl_download(url, destfile_temp, quiet=TRUE) },
         error=function(e) {},
         warning=function(e) {}
     )

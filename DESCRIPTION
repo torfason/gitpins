@@ -11,6 +11,7 @@ Description: Pin URLs to local file and version the pins with git.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 
+    curl,
     digest,
     gert,
     here,
