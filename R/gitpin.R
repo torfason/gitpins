@@ -123,6 +123,7 @@ list_gitpins <- function(history=FALSE) {
       lapply(jsonlite::fromJSON) |>
       lapply(as.data.frame) |>
       do.call(what=rbind)
+    d.result <- d.result[order(d.result$timestamp, decreasing=TRUE),]
   } else {
     # Return result based on what is in the gitlog
     logmessages <- gert::git_log(repo=.globals$repo)$message
