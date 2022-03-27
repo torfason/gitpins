@@ -58,10 +58,10 @@ gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.mont
   read.csv() |> head()
 ```
 
-The file is downloaded the first time you run `gitpin` on a given URL. After
-that, it checks to see the age of the local file and re-downloads if it is to
-old. The default refresh interval is 12 hours, but is configurable with a
-parameter.
+The file is downloaded the first time you run `gitpin` on a given URL (the
+actual download is done with `curl::curl_download()`). After that, it checks to
+see the age of the local file and re-downloads if it is to old. The default
+refresh interval is 12 hours, but is configurable with a parameter.
 
 Note that the return value of the `gitpin()` function is simply the full path to
 the local copy of the file. You can therefore use `gitpin()` with the original

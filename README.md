@@ -63,10 +63,11 @@ gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.mont
 #> 6 6 1749.417  83.5
 ```
 
-The file is downloaded the first time you run `gitpin` on a given URL.
-After that, it checks to see the age of the local file and re-downloads
-if it is to old. The default refresh interval is 12 hours, but is
-configurable with a parameter.
+The file is downloaded the first time you run `gitpin` on a given URL
+(the actual download is done with `curl::curl_download()`). After that,
+it checks to see the age of the local file and re-downloads if it is to
+old. The default refresh interval is 12 hours, but is configurable with
+a parameter.
 
 Note that the return value of the `gitpin()` function is simply the full
 path to the local copy of the file. You can therefore use `gitpin()`
@@ -121,15 +122,15 @@ list_gitpins()
 #> # A tibble: 2 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-23 17:07:54.55158 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 2 2022-03-23 17:07:54.90770 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2022-03-27 15:51:06.93807 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-03-27 15:51:06.73767 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
 list_gitpins(history = TRUE)
 #> # A tibble: 3 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-23 17:07:54.90770 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-03-23 17:07:54.55158 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2022-03-23 17:07:54.29960 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2022-03-27 15:51:06.93807 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-03-27 15:51:06.73767 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2022-03-27 15:51:06.31651 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation
