@@ -66,8 +66,8 @@ refresh interval is 12 hours, but is configurable with a parameter.
 Note that the return value of the `gitpin()` function is simply the full path to
 the local copy of the file. You can therefore use `gitpin()` with the original
 URL wherever you would have used the local path of the resource. The exact name
-of the file is constructed deterministically based on the URL (specifically, the
-base name is the `digest()` of the URL).
+of the file is constructed in a deterministic way based on the URL
+(specifically, the base name is the `digest()` of the URL).
 
 ```{r}
 # Uses a cached copy if a recent one is available (start of the url changed for privacy)
@@ -129,7 +129,7 @@ remotes::install_github("torfason/gitpins")
 This package was inspired by the `pins` package, and in particular the `pin()` function.
 However, that function stores the actual local file in a system location rather than
 inside the project, so using it was not totally reliable. Also, it did not have 
-the desired versioning propertiests. Thus, `gitpins` was born.
+the desired versioning properties. Thus, `gitpins` was born.
 
 For feature requests, bugs, or other feedback, feel free to file an issue.
 

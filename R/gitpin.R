@@ -1,10 +1,10 @@
 
 .globals <- new.env()
 
-#' Convert datetime to sub-millisecond timestamp
+#' Convert date-time variable to sub-millisecond timestamp
 #'
-#' @param the_datetime A date variable
-#' @return A character representation of `the_datetime` as a sub-millisecond timestamp
+#' @param the_datetime a date variable
+#' @return a character representation of `the_datetime` as a sub-millisecond timestamp
 #' @md
 #' @keywords internal
 tstamp <- function(the_datetime) {
@@ -21,11 +21,13 @@ tstamp <- function(the_datetime) {
 fstamp <- function(the_datetime) {
   strftime(the_datetime , "%Y-%m-%d.%H%M%S")
 }
+
+#' Initialize gitpins repository
 #'
 #' This function is called automatically as needed and should not
 #' need to be called by the user
 #'
-#' @return The path to the repo
+#' @return The path to the repository
 #' @md
 #' @keywords internal
 init_gitpins <- function() {
@@ -33,7 +35,7 @@ init_gitpins <- function() {
   gert::git_init(path=.globals$repo)
 }
 
-#' Download URL, add to gitpins repo, and return filename
+#' Download URL, add to gitpins repository, and return filename
 #'
 #' The `gitpin()` function downloads a URL to a local file in the `gitpins`
 #' folder inside your project (the currently fixed path is determined by
@@ -41,7 +43,7 @@ init_gitpins <- function() {
 #' local file, which can be passed as an argument to any function that
 #' expects to read such a file.
 #'
-#' @param url The URL do townload (or get a cached copy of)
+#' @param url The URL do download (or get a cached copy of)
 #' @param refresh_hours How old, in hours, can the locally cached copy be
 #'   before downloading a new version.
 #' @return The path of the locally downloaded file
