@@ -11,7 +11,16 @@ tstamp <- function(the_datetime) {
   strftime(the_datetime , "%Y-%m-%d %H:%M:%OS5")
 }
 
-#' Initialize gitpins repo
+#' Convert date-time variable to file-compatible timestamp
+#'
+#' @param the_datetime a date variable
+#' @return a character representation of `the_datetime` as
+#'     a timestamp with only file-compatible characters
+#' @md
+#' @keywords internal
+fstamp <- function(the_datetime) {
+  strftime(the_datetime , "%Y-%m-%d.%H%M%S")
+}
 #'
 #' This function is called automatically as needed and should not
 #' need to be called by the user
