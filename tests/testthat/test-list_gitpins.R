@@ -1,3 +1,18 @@
+
+test_that("listing works", {
+
+  # Always return two-colum tibble on default call
+  list_gitpins() |>
+    names() |>
+    expect_equal(c("timestamp", "url"))
+
+  # Always return tibble when including history
+  list_gitpins(history=TRUE) |>
+    names() |>
+    expect_equal(c("timestamp", "url"))
+
+})
+
 test_that("listing is in default order", {
 
   # Nohist listing should be indecreasing order

@@ -1,6 +1,5 @@
 
-
-test_that("gitpin works",{
+test_that("gitpin works with local server",{
 
   # Skip test if suggested packages callr and servr are not installed
   if ( !requireNamespace("callr", quietly = TRUE) ||
@@ -9,19 +8,7 @@ test_that("gitpin works",{
   }
 
   # Set here with reference to the test file
-  here::i_am("tests/testthat/test-gitpin.R")  |> expect_message("gitpins")
-
-  # Set the remote testing urls
-  test_url_remote <- "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/boot/acme.csv"
-  test_url_remote_2 <- "https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv"
-
-  # Start with a remote test
-  expect_equal(
-    gitpin(test_url_remote) |> read.csv() |> nrow(),
-    60) |> expect_message()
-
-  # Followed with a test that fails
-  expect_error(gitpin("bla"))
+  here::i_am("tests/testthat/test-gitpin-local.R") |> expect_message("gitpins")
 
   # If here does not get us the path to the local www_root, we panic
   if(!file.exists(here::here("tests","www_root"))) stop("Web root not found, skipping test")
