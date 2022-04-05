@@ -28,7 +28,9 @@ stopifnot(!file.exists(here::here("gitpins")))
 
 ## The problem
 
-You want to quickly and easily process an online resource using R functions, some of which only accept local files. Thus you would like the following properties for your workflow:
+You want to quickly and easily process an online resource using R functions,
+some of which only accept local files. Thus you would like the following
+properties for your workflow:
 
 * Download to a local file
 * But avoid downloading on every single run
@@ -98,9 +100,10 @@ downloads is kept, but if the resource is not changing a lot, this history will
 not take up an inordinate amount of space (because of the deduplication
 properties of `git`).
 
-If the resource gets borked, you can retrieve older versions using git. A function
-is provided to list available pins (with or without history), but beyond that, the
-user is expected to use `git` directly for more complex retrieval operations.
+If the resource gets borked, you can retrieve older versions using git. A
+function is provided to list available pins (with or without history), but
+beyond that, the user is expected to use `git` directly for more complex
+retrieval operations.
 
 ```{r, include=FALSE}
 old_width <- options(width=130)
@@ -126,15 +129,16 @@ remotes::install_github("torfason/gitpins")
 ```
 
 Note that `gitpins` uses the native pipe operator (`|>`) and so depends on `R
-(>= 4.1.0)`. If this is an issue for you, holler and can probably be convinced
+(>= 4.1.0)`. If this is an issue for you, holler and I can probably be convinced
 of changing it to make it compatible with older versions.
 
 ## Related packages and feedback
 
-This package was inspired by the `pins` package, and in particular the `pin()` function.
-However, that function stores the actual local file in a system location rather than
-inside the project, so using it was not totally reliable. Also, it did not have 
-the desired versioning properties. Thus, `gitpins` was born.
+This package was inspired by the `pins` package, and in particular the `pin()`
+function. However, that function stores the actual local file in a system
+location rather than inside the project, so using it was not totally reliable.
+Also, it did not have the desired versioning properties. Thus, `gitpins` was
+born.
 
 For feature requests, bugs, or other feedback, feel free to file an issue.
 

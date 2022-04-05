@@ -1,7 +1,7 @@
 Package: gitpins
 Type: Package
 Title: Pin urls to local file and version with git
-Version: 0.1.1
+Version: 0.1.2
 Author: Magnus Thor Torfason
 Maintainer: Magnus Thor Torfason <m@zulutime.net>
 Description: Pin URLs to local file and version the pins with git. 
@@ -10,6 +10,7 @@ Description: Pin URLs to local file and version the pins with git.
     previous local download is made available.
 License: MIT + file LICENSE
 Encoding: UTF-8
+Language: en-US
 Imports: 
     curl,
     digest,
