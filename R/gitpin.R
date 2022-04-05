@@ -127,6 +127,15 @@ gitpin <- function(url, refresh_hours=12) {
 list_gitpins <- function(history=FALSE) {
   init_gitpins()
 
+  # Function to return empty data.frame on fresh repo instead of erroring
+  get_repo_log_messages <- function(the_repo) {
+    tryCatch({
+      gert::git_log(repo=.globals$repo)$message
+    }, error=function(cond) {
+      character()
+    })
+  }
+
   if (!history) {
     # Return result based on what is in the working copy
     d.result <- list.files(.globals$repo, pattern="*.json", full.names = TRUE) |>
@@ -134,10 +143,11 @@ list_gitpins <- function(history=FALSE) {
       lapply(jsonlite::fromJSON) |>
       lapply(as.data.frame) |>
       do.call(what=rbind)
+    if (is.null(d.result)) d.result <- data.frame(timestamp=character(), url=character())
     d.result <- d.result[order(d.result$timestamp, decreasing=TRUE),]
   } else {
     # Return result based on what is in the gitlog
-    logmessages <- gert::git_log(repo=.globals$repo)$message
+    logmessages <- get_repo_log_messages()
     d.result <- data.frame(
       timestamp = gsub('\\[(.*)\\].*','\\1',logmessages),
       url = gsub('.*\\] (.*)','\\1',logmessages) |>
