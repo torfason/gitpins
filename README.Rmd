@@ -21,6 +21,7 @@ stopifnot(!file.exists(here::here("gitpins")))
 # gitpins
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/torfason/gitpins/workflows/R-CMD-check/badge.svg)](https://github.com/torfason/gitpins/actions)
 <!-- badges: end -->
 
 `r desc::desc_get("Description")`

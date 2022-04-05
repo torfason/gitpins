@@ -4,6 +4,8 @@
 # gitpins
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/torfason/gitpins/workflows/R-CMD-check/badge.svg)](https://github.com/torfason/gitpins/actions)
 <!-- badges: end -->
 
 Pin URLs to local file and version the pins with git. Repeated downloads
