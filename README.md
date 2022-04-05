@@ -122,26 +122,30 @@ list_gitpins()
 #> # A tibble: 2 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-27 18:10:07.50945 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-03-27 18:10:07.31000 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 1 2022-04-05 12:44:37.72224 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-04-05 12:44:37.47382 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
 list_gitpins(history = TRUE)
 #> # A tibble: 3 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-03-27 18:10:07.50945 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-03-27 18:10:07.31000 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2022-03-27 18:10:06.90967 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2022-04-05 12:44:37.72224 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2022-04-05 12:44:37.47382 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2022-04-05 12:44:37.01569 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation
 
-You can install the development version of gitpins like so:
+You can install the development version of `gitpins` like so:
 
 ``` r
 pak::pak("torfason/gitpins")
 # or alternatively
 remotes::install_github("torfason/gitpins")
 ```
+
+Note that `gitpins` uses the native pipe operator (`|>`) and so depends
+on `R (>= 4.1.0)`. If this is an issue for you, holler and can probably
+be convinced of changing it to make it compatible with older versions.
 
 ## Related packages and feedback
 

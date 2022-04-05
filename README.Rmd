@@ -116,13 +116,17 @@ options(old_width)
 
 ## Installation
 
-You can install the development version of gitpins like so:
+You can install the development version of `gitpins` like so:
 
 ``` r
 pak::pak("torfason/gitpins")
 # or alternatively
 remotes::install_github("torfason/gitpins")
 ```
+
+Note that `gitpins` uses the native pipe operator (`|>`) and so depends on `R
+(>= 4.1.0)`. If this is an issue for you, holler and can probably be convinced
+of changing it to make it compatible with older versions.
 
 ## Related packages and feedback
 
