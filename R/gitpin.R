@@ -33,6 +33,8 @@ fstamp <- function(the_datetime) {
 init_gitpins <- function() {
   .globals$repo <- here::here("gitpins")
   gert::git_init(path=.globals$repo)
+  gert::git_config_set(repo=.globals$repo, "user.name", "Git Pins")
+  gert::git_config_set(repo=.globals$repo, "user.email", "gitpins@zulutime.net")
 }
 
 #' Download URL, add to gitpins repository, and return filename
