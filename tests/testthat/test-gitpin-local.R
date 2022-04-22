@@ -1,5 +1,5 @@
 
-test_that("gitpin works with local server",{
+test_that("gitpins work with local server",{
 
   # Skip test if suggested packages callr and servr are not installed
   if ( !requireNamespace("callr", quietly = TRUE) ||
@@ -46,24 +46,24 @@ test_that("gitpin works with local server",{
 
   # Test with the local server
   expect_equal(
-    gitpin(test_url_local) |> read.csv() |> nrow(),
+    pin(test_url_local) |> read.csv() |> nrow(),
     10) |> expect_message()
 
   # Check refresh logic
   expect_message(
-    gitpin(test_url_local, refresh_hours = 0),
+    pin(test_url_local, refresh_hours = 0),
     "Downloaded fresh version ...")
 
   # Immediately again should work, or after sleeping a bit
   expect_message(
-    gitpin(test_url_local, refresh_hours = 0),
+    pin(test_url_local, refresh_hours = 0),
     "Downloaded fresh version ...")
   expect_message(
-    gitpin(test_url_local, refresh_hours = 1/3600),
+    pin(test_url_local, refresh_hours = 1/3600),
     "Recent version found, using it ...")
   Sys.sleep(1.1)
   expect_message(
-    gitpin(test_url_local, refresh_hours = 1/3600),
+    pin(test_url_local, refresh_hours = 1/3600),
     "Downloaded fresh version ...")
 
   # Shut down server
@@ -71,7 +71,7 @@ test_that("gitpin works with local server",{
 
   # And now we should use last good version
   expect_message(
-    gitpin(test_url_local, refresh_hours = 0),
+    pin(test_url_local, refresh_hours = 0),
     "Download failed, using last good version ...")
 
 })

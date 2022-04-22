@@ -49,7 +49,7 @@ file.
 
 ```{r}
 # Downloads on first try
-gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |> 
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |> 
   read.csv() |> head()
 ```
 
@@ -57,24 +57,24 @@ You can maintain as many resources as you need:
 
 ```{r}
 # Another resource
-gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv") |> 
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv") |> 
   read.csv() |> head()
 ```
 
-The file is downloaded the first time you run `gitpin` on a given URL (the
+The file is downloaded the first time you run `pin()` on a given URL (the
 actual download is done with `curl::curl_download()`). After that, it checks to
 see the age of the local file and re-downloads if it is to old. The default
 refresh interval is 12 hours, but is configurable with a parameter.
 
-Note that the return value of the `gitpin()` function is simply the full path to
-the local copy of the file. You can therefore use `gitpin()` with the original
+Note that the return value of the `pin()` function is simply the full path to
+the local copy of the file. You can therefore use `pin()` with the original
 URL wherever you would have used the local path of the resource. The exact name
 of the file is constructed in a deterministic way based on the URL
 (specifically, the base name is the `digest()` of the URL).
 
 ```{r}
 # Uses a cached copy if a recent one is available (start of the url changed for privacy)
-gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |>
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
 ```
 
@@ -84,12 +84,12 @@ always use the local copy (after the first download).
 
 ```{r}
 # Force a reload by specifying zero refresh time
-gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
        refresh_hours = 0) |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
 
 # Always use local copy by specifying Inf refresh time
-gitpin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
        refresh_hours = Inf) |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
 ```
@@ -110,8 +110,8 @@ old_width <- options(width=130)
 ```
 
 ```{r}
-list_gitpins()
-list_gitpins(history = TRUE)
+list_pins()
+list_pins(history = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -120,12 +120,27 @@ options(old_width)
 
 ## Installation
 
-You can install the development version of `gitpins` like so:
+Install `gitpins` with either of the following commands:
 
 ``` r
 pak::pak("torfason/gitpins")
 # or alternatively
 remotes::install_github("torfason/gitpins")
+```
+
+You can then load and use the package like this:
+
+```r
+library(gitpins)
+pin(URL)
+```
+
+To use this concurrently with another package that also defines a `pin()`
+function, exclude this function and use the alias `gitpin()` instead:
+
+```r
+library(gitpins, exclude="pin")
+gitpin(URL)
 ```
 
 Note that `gitpins` uses the native pipe operator (`|>`) and so depends on `R
@@ -134,11 +149,12 @@ of changing it to make it compatible with older versions.
 
 ## Related packages and feedback
 
-This package was inspired by the `pins` package, and in particular the `pin()`
-function. However, that function stores the actual local file in a system
-location rather than inside the project, so using it was not totally reliable.
-Also, it did not have the desired versioning properties. Thus, `gitpins` was
-born.
+This package was inspired by the `pins` package, and in particular the
+`pins::pin()` function. However, that function stores the actual local file in a
+system location rather than inside the project, so using it did not prove
+reliable reliable. Furthermore, it did not have the desired versioning
+properties, and finally, it is now defined as a legacy function and is not part
+of the new api for that package. As a result, `gitpins` was born.
 
 For feature requests, bugs, or other feedback, feel free to file an issue.
 

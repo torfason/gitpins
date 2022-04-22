@@ -39,7 +39,7 @@ init_gitpins <- function() {
 
 #' Download URL, add to gitpins repository, and return filename
 #'
-#' The `gitpin()` function downloads a URL to a local file in the `gitpins`
+#' The `pin()` function downloads a URL to a local file in the `gitpins`
 #' folder inside your project (the currently fixed path is determined by
 #' `here("gitpins")`), and then returns the full file name name of the
 #' local file, which can be passed as an argument to any function that
@@ -52,7 +52,7 @@ init_gitpins <- function() {
 #'
 #' @md
 #' @export
-gitpin <- function(url, refresh_hours=12) {
+pin <- function(url, refresh_hours=12) {
   #url <- "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/boot/acme.csv"
 
   # Default frequency of downloads, configurable with config_gitpins()
@@ -119,14 +119,25 @@ gitpin <- function(url, refresh_hours=12) {
   destfile_data
 }
 
-#' List available gitpins
+#' The gitpin() function is an alias for pin()
+#'
+#' The `gitpin()` function is provided as an alias for `pin()`, to address
+#' naming conflicts (for example with [pins::pin()]).
+#'
+#' @name pin
+#' @md
+#' @export
+gitpin <- pin
+
+
+#' List available pins
 #'
 #' @param history Should full (git) history be returned?
-#' @return A `data.frame` with the timestamps and urls of available gitpins.
+#' @return A `data.frame` with the timestamps and urls of available pins.
 #'
 #' @md
 #' @export
-list_gitpins <- function(history=FALSE) {
+list_pins <- function(history=FALSE) {
   init_gitpins()
 
   # Function to return empty data.frame on fresh repo instead of erroring
@@ -164,10 +175,10 @@ list_gitpins <- function(history=FALSE) {
   d.result
 }
 
-#' Clearing old gitpins is not currently implemented
+#' Clearing old pins is not currently implemented
 #' @md
 #' @keywords internal
-clear_old_gitpins <- function() {
+clear_old_pins <- function() {
   stop("not implemented")
 }
 
