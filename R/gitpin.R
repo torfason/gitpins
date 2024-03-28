@@ -103,15 +103,15 @@ pin <- function(url, refresh_hours=12) {
     if ( !file.exists(destfile_temp) || file.size(destfile_temp)==0 ) {
       # Download failed in some way
       if (!file.exists(destfile_data)) {
-        stop("Download failed and no earlier version found: Aborting!")
+        stop("pin() failed to download file and no earlier version found: Aborting!")
       } else {
-        message("Download failed, using last good version ...")
+        message("pin() failed to download file, using last good version ...")
         return(destfile_data)
       }
     }
 
     # Download succeeded
-    message("Downloaded fresh version ...")
+    message("pin() downloaded fresh version ...")
     file.copy(destfile_temp, destfile_data, overwrite = TRUE)
     list(timestamp=jsonlite::unbox(tstamp(timestamp)), url=jsonlite::unbox(url)) |>
       jsonlite::toJSON(pretty = TRUE, simplifyVector=TRUE) |>

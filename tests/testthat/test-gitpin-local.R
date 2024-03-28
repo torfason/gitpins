@@ -53,19 +53,19 @@ test_that("gitpins work with local server", {
   # Check refresh logic
   expect_message(
     pin(test_url_local, refresh_hours = 0),
-    "Downloaded fresh version ...")
+    "pin\\(\\) downloaded fresh version ...")
 
   # Immediately again should work, or after sleeping a bit
   expect_message(
     pin(test_url_local, refresh_hours = 0),
-    "Downloaded fresh version ...")
+    "pin\\(\\) downloaded fresh version ...")
   expect_message(
     pin(test_url_local, refresh_hours = 1/3600),
-    "Recent version found, using it ...")
+    "pin\\(\\) found recent version, using it ...")
   Sys.sleep(1.1)
   expect_message(
     pin(test_url_local, refresh_hours = 1/3600),
-    "Downloaded fresh version ...")
+    "pin\\(\\) downloaded fresh version ...")
 
   # Shut down server
   x$proc$kill()
@@ -73,6 +73,6 @@ test_that("gitpins work with local server", {
   # And now we should use last good version
   expect_message(
     pin(test_url_local, refresh_hours = 0),
-    "Download failed, using last good version ...")
+    "pin\\(\\) failed to download file, using last good version ...")
 
 })

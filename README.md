@@ -19,13 +19,13 @@ You want to quickly and easily process an online resource using R
 functions, some of which only accept local files. Thus you would like
 the following properties for your workflow:
 
--   Download to a local file
--   But avoid downloading on every single run
--   Refresh your data regularly from the online source
--   Use a local copy if the online resource is not accessible
--   Have the local copy be easily accessible in a predictable location
--   Not ruin your local copy if the online version should change in a
-    “bad” way
+- Download to a local file
+- But avoid downloading on every single run
+- Refresh your data regularly from the online source
+- Use a local copy if the online resource is not accessible
+- Have the local copy be easily accessible in a predictable location
+- Not ruin your local copy if the online version should change in a
+  “bad” way
 
 ## The solution
 
@@ -39,14 +39,14 @@ expects to read such a file.
 # Downloads on first try
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |> 
   read.csv() |> head()
-#> Downloaded fresh version ...
-#>   X country_code         country_name year top_level_domain
-#> 1 1           AD              Andorra 1974              .ad
-#> 2 2           AE United Arab Emirates 1974              .ae
-#> 3 3           AF          Afghanistan 1974              .af
-#> 4 4           AG  Antigua and Barbuda 1974              .ag
-#> 5 5           AI             Anguilla 1985              .ai
-#> 6 6           AL              Albania 1974              .al
+#> pin() downloaded fresh version ...
+#>   rownames country_code         country_name year top_level_domain
+#> 1        1           AD              Andorra 1974              .ad
+#> 2        2           AE United Arab Emirates 1974              .ae
+#> 3        3           AF          Afghanistan 1974              .af
+#> 4        4           AG  Antigua and Barbuda 1974              .ag
+#> 5        5           AI             Anguilla 1985              .ai
+#> 6        6           AL              Albania 1974              .al
 ```
 
 You can maintain as many resources as you need:
@@ -55,14 +55,14 @@ You can maintain as many resources as you need:
 # Another resource
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv") |> 
   read.csv() |> head()
-#> Downloaded fresh version ...
-#>   X     time value
-#> 1 1 1749.000  58.0
-#> 2 2 1749.083  62.6
-#> 3 3 1749.167  70.0
-#> 4 4 1749.250  55.7
-#> 5 5 1749.333  85.0
-#> 6 6 1749.417  83.5
+#> pin() downloaded fresh version ...
+#>   rownames     time value
+#> 1        1 1749.000  58.0
+#> 2        2 1749.083  62.6
+#> 3        3 1749.167  70.0
+#> 4        4 1749.250  55.7
+#> 5        5 1749.333  85.0
+#> 6        6 1749.417  83.5
 ```
 
 The file is downloaded the first time you run `pin()` on a given URL
@@ -82,7 +82,7 @@ the URL).
 # Uses a cached copy if a recent one is available (start of the url changed for privacy)
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv") |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
-#> Recent version found, using it ...
+#> pin() found recent version, using it ...
 #> [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"
 ```
 
@@ -96,14 +96,14 @@ download).
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
        refresh_hours = 0) |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
-#> Downloaded fresh version ...
+#> pin() downloaded fresh version ...
 #> [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"
 
 # Always use local copy by specifying Inf refresh time
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
        refresh_hours = Inf) |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
-#> Recent version found, using it ...
+#> pin() found recent version, using it ...
 #> [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"
 ```
 
@@ -124,15 +124,15 @@ list_pins()
 #> # A tibble: 2 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-04-22 13:21:41.64403 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-04-22 13:21:41.40332 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 1 2024-03-28 16:27:41.32470 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2024-03-28 16:27:41.08385 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
 list_pins(history = TRUE)
 #> # A tibble: 3 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2022-04-22 13:21:41.64403 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2022-04-22 13:21:41.40332 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2022-04-22 13:21:41.02342 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2024-03-28 16:27:41.32470 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2024-03-28 16:27:41.08385 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2024-03-28 16:27:40.70178 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation
