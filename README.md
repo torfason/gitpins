@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/torfason/gitpins/workflows/R-CMD-check/badge.svg)](https://github.com/torfason/gitpins/actions)
+[![R-CMD-check](https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Pin URLs to local file and version the pins with git. Repeated downloads
@@ -124,15 +125,15 @@ list_pins()
 #> # A tibble: 2 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2024-03-28 16:27:41.32470 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2024-03-28 16:27:41.08385 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
 list_pins(history = TRUE)
 #> # A tibble: 3 × 2
 #>   timestamp                 url                                                                          
 #>   <chr>                     <chr>                                                                        
-#> 1 2024-03-28 16:27:41.32470 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2024-03-28 16:27:41.08385 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2024-03-28 16:27:40.70178 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#> 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
+#> 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
+#> 3 2024-03-28 16:33:23.27699 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
 ```
 
 ## Installation
