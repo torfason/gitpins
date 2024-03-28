@@ -1,0 +1,9 @@
+linters: linters_with_defaults(
+    infix_spaces_linter  = NULL, # 40
+    line_length_linter   = NULL, # 13
+    spaces_inside_linter = NULL, # 9
+    object_name_linter   = NULL  # 5
+  )
+exclusions: list(
+    "man/*.Rd"
+  )

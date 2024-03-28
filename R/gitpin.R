@@ -4,11 +4,14 @@
 #' Convert date-time variable to sub-millisecond timestamp
 #'
 #' @param the_datetime a date variable
-#' @return a character representation of `the_datetime` as a sub-millisecond timestamp
+#' @return a character representation of `the_datetime` as a sub-millisecond
+#'   timestamp
 #' @md
 #' @keywords internal
 tstamp <- function(the_datetime) {
-  strftime(the_datetime , "%Y-%m-%d %H:%M:%OS5")
+  assert_posixct(the_datetime)
+
+  strftime(the_datetime, "%Y-%m-%d %H:%M:%OS5")
 }
 
 #' Convert date-time variable to file-compatible timestamp
@@ -19,7 +22,9 @@ tstamp <- function(the_datetime) {
 #' @md
 #' @keywords internal
 fstamp <- function(the_datetime) {
-  strftime(the_datetime , "%Y-%m-%d.%H%M%S")
+  assert_posixct(the_datetime)
+
+  strftime(the_datetime, "%Y-%m-%d.%H%M%S")
 }
 
 #' Initialize gitpins repository
@@ -53,7 +58,8 @@ init_gitpins <- function() {
 #' @md
 #' @export
 pin <- function(url, refresh_hours=12) {
-  #url <- "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/boot/acme.csv"
+  assert_string(url)
+  assert_number(refresh_hours)
 
   # Default frequency of downloads, configurable with config_gitpins()
   # could be to redownload if not the same day as the last download.
@@ -64,16 +70,17 @@ pin <- function(url, refresh_hours=12) {
   stopifnot(!is.null(url) && is.character(url) && length(url)==1)
   url_hash <- digest::digest(url)
   timestamp <-  Sys.time()
-  destfile_data <- file.path(.globals$repo,paste0(url_hash,".data"))
-  destfile_temp <- file.path(.globals$repo,paste0(url_hash,".temp"))
-  on.exit(if(file.exists(destfile_temp))file.remove(destfile_temp))
-  destfile_info <- file.path(.globals$repo,paste0(url_hash,".info"))
-  destfile_json <- file.path(.globals$repo,paste0(url_hash,".json"))
+  destfile_data <- file.path(.globals$repo, paste0(url_hash, ".data"))
+  destfile_temp <- file.path(.globals$repo, paste0(url_hash, ".temp"))
+  on.exit(if (file.exists(destfile_temp)) file.remove(destfile_temp)) # nolint
+  destfile_json <- file.path(.globals$repo, paste0(url_hash, ".json"))
 
   # Read some metadata, to determine what to do next
   if ( file.exists(destfile_json) ) {
     meta_last <- readLines(destfile_json) |> jsonlite::fromJSON()
-    delta_hours <- as.double(difftime(timestamp, as.POSIXct(meta_last$timestamp), units="hours"))
+    delta_hours <- as.double(difftime(timestamp,
+                             as.POSIXct(meta_last$timestamp),
+                             units="hours"))
     if ( delta_hours < refresh_hours ) {
       recent_version_found <- TRUE
     }
@@ -84,16 +91,16 @@ pin <- function(url, refresh_hours=12) {
 
   # Do the download and determine next steps
   if ( recent_version_found ) {
-    message(paste("Recent version found, using it ..."))
+    message(paste("pin() found recent version, using it ..."))
   } else {
 
     tryCatch(
-      { dl_result <- curl::curl_download(url, destfile_temp, quiet=TRUE) },
-        error=function(e) {},
-        warning=function(e) {}
+      { curl::curl_download(url, destfile_temp, quiet=TRUE) },
+        error=function(e) {},     # nolint
+        warning=function(e) {}    # nolint
     )
 
-    if ( !file.exists(destfile_temp) || file.size(destfile_temp)==0) {
+    if ( !file.exists(destfile_temp) || file.size(destfile_temp)==0 ) {
       # Download failed in some way
       if (!file.exists(destfile_data)) {
         stop("Download failed and no earlier version found: Aborting!")
@@ -106,13 +113,12 @@ pin <- function(url, refresh_hours=12) {
     # Download succeeded
     message("Downloaded fresh version ...")
     file.copy(destfile_temp, destfile_data, overwrite = TRUE)
-    #writeLines(c(timestamp, url), destfile_info)
     list(timestamp=jsonlite::unbox(tstamp(timestamp)), url=jsonlite::unbox(url)) |>
       jsonlite::toJSON(pretty = TRUE, simplifyVector=TRUE) |>
       writeLines(destfile_json)
 
     gert::git_add(
-      basename(c(destfile_data,destfile_json)), # Must be relative to repo root
+      basename(c(destfile_data, destfile_json)), # Must be relative to repo root
       repo=.globals$repo)
     gert::git_commit_all(paste0("[", tstamp(timestamp), "] ", url), repo=.globals$repo)
   }
@@ -138,6 +144,8 @@ gitpin <- pin
 #' @md
 #' @export
 list_pins <- function(history=FALSE) {
+  assert_flag(history)
+
   init_gitpins()
 
   # Function to return empty data.frame on fresh repo instead of erroring
@@ -157,19 +165,19 @@ list_pins <- function(history=FALSE) {
       lapply(as.data.frame) |>
       do.call(what=rbind)
     if (is.null(d.result)) d.result <- data.frame(timestamp=character(), url=character())
-    d.result <- d.result[order(d.result$timestamp, decreasing=TRUE),]
+    d.result <- d.result[order(d.result$timestamp, decreasing=TRUE), ]
   } else {
     # Return result based on what is in the gitlog
     logmessages <- get_repo_log_messages()
     d.result <- data.frame(
-      timestamp = gsub('\\[(.*)\\].*','\\1',logmessages),
-      url = gsub('.*\\] (.*)','\\1',logmessages) |>
+      timestamp = gsub("\\[(.*)\\].*", "\\1", logmessages),
+      url = gsub(".*\\] (.*)", "\\1", logmessages) |>
         sub(pattern="\\n", replacement="")
     )
   }
 
   # Be nice and return a tibble if it is available
-  if (requireNamespace("tibble")){
+  if (requireNamespace("tibble")) {
     d.result <- tibble::as_tibble(d.result)
   }
   d.result
@@ -181,4 +189,3 @@ list_pins <- function(history=FALSE) {
 clear_old_pins <- function() {
   stop("not implemented")
 }
-

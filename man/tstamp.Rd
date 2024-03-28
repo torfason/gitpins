@@ -10,7 +10,8 @@ tstamp(the_datetime)
 \item{the_datetime}{a date variable}
 }
 \value{
-a character representation of \code{the_datetime} as a sub-millisecond timestamp
+a character representation of \code{the_datetime} as a sub-millisecond
+timestamp
 }
 \description{
 Convert date-time variable to sub-millisecond timestamp

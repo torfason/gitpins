@@ -1,23 +1,24 @@
 
-test_that("gitpins work with local server",{
+test_that("gitpins work with local server", {
 
   # Skip test if suggested packages callr and servr are not installed
   if ( !requireNamespace("callr", quietly = TRUE) ||
        !requireNamespace("servr", quietly = TRUE) ) {
-    skip()
+    skip("Packages callr or servr not found, skipping test")
   }
 
   # Set here with reference to the test file
   here::i_am("tests/testthat/test-gitpin-local.R") |> expect_message("gitpins")
 
   # If here does not get us the path to the local www_root, we panic
-  if(!file.exists(here::here("tests","www_root"))) stop("Web root not found, skipping test")
+  if (!file.exists(here::here("tests", "www_root")))
+    stop("Web root not found, skipping test")
 
   # Function to start a local server.
   callr_servr <- function() {
     host    <- getOption("servr.host", "127.0.0.1")
     port    <- servr:::random_port()
-    dir     <- here::here("tests","www_root")
+    dir     <- here::here("tests", "www_root")
     proc <- callr::r_bg(servr::httd,
                         args=list(daemon=FALSE, dir=dir, host=host, port=port),
                         package="servr")
@@ -75,4 +76,3 @@ test_that("gitpins work with local server",{
     "Download failed, using last good version ...")
 
 })
-

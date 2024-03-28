@@ -1,5 +1,5 @@
 
-test_that("gitpin works with remote URLs",{
+test_that("gitpin works with remote URLs", {
 
   skip_if_offline()
 

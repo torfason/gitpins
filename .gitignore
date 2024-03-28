@@ -5,5 +5,6 @@
 .DS_Store
 
 # Manual additions
+/scratch/
 /gitpins/
 /gitpins_*/

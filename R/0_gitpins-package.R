@@ -16,6 +16,12 @@
 #' To get started, check out the help for the [gitpin()] function, or take a
 #' look at the info on GitHub (see links below).
 #'
+#' @importFrom checkmate assert_string
+#' @importFrom checkmate assert_number
+#' @importFrom checkmate assert_flag
+#' @importFrom checkmate assert_int
+#' @importFrom checkmate assert_posixct
+#'
 #' @docType package
 #' @name gitpins
 #' @md

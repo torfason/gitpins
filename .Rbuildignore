@@ -2,5 +2,8 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^scratch$
 ^gitpins$
 ^\.github$
+^.lintr$
+^gitpins_.*$

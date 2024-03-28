@@ -3,7 +3,7 @@
 {
   gpdir <- here::here("gitpins")
   if (file.exists(gpdir)) {
-    file.rename(gpdir, paste0(gpdir,"_",fstamp(Sys.time())))
+    file.rename(gpdir, paste0(gpdir,"_",gitpins:::fstamp(Sys.time())))
   }
   devtools::build()
   devtools::document()
