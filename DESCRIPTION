@@ -20,10 +20,12 @@ Imports:
     jsonlite,
     checkmate
 Suggests: 
+    fs,
     tibble,
     testthat (>= 3.0.0),
     callr,
-    servr
+    servr,
+    withr
 Depends:
     R (>= 4.1.0)
 Config/testthat/edition: 3

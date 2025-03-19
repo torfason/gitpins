@@ -30,13 +30,22 @@ fstamp <- function(the_datetime) {
 #' Initialize gitpins repository
 #'
 #' This function is called automatically as needed and should not
-#' need to be called by the user
+#' need to be called by the user. Note, however that to set a non-standard
+#' directory for the pinned files, this function must be called before
+#' any other functions.
 #'
+#' @param options A `gp_options()` object, used in particular to select
+#'   the directory for storing the pins (defaults to `here::here("gitpins")`).
 #' @return The path to the repository
 #' @md
 #' @keywords internal
-init_gitpins <- function() {
-  .globals$repo <- here::here("gitpins")
+init_gitpins <- function(..., options = gp_options()) {
+
+  # Verify inputs
+  assert_dots_empty()
+  assert_gp_options(options)
+
+  .globals$repo <- options$pin_directory
   gert::git_init(path=.globals$repo)
   gert::git_config_set(repo=.globals$repo, "user.name", "Git Pins")
   gert::git_config_set(repo=.globals$repo, "user.email", "gitpins@zulutime.net")
