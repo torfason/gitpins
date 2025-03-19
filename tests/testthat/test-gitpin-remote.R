@@ -9,16 +9,16 @@ test_that("gitpin works with remote URLs", {
 
   # Start with a remote test
   expect_equal(
-    gitpin(test_url_remote_1) |> read.csv() |> nrow(),
+    pin(test_url_remote_1) |> read.csv() |> nrow(),
     60) |> expect_message()
 
   # Different servers
   expect_equal(
-    gitpin(test_url_remote_2) |> read.csv() |> nrow(),
+    pin(test_url_remote_2) |> read.csv() |> nrow(),
     249) |> expect_message()
 
 
   # Followed with a test that fails
-  expect_error(gitpin("bla"))
+  expect_error(pin("bla"))
 
 })

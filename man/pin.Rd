@@ -2,12 +2,12 @@
 % Please edit documentation in R/gitpin.R
 \name{pin}
 \alias{pin}
-\alias{gitpin}
+\alias{gp_pin}
 \title{Download URL, add to gitpins repository, and return filename}
 \usage{
 pin(url, refresh_hours = 12)
 
-gitpin(url, refresh_hours = 12)
+gp_pin(url, refresh_hours = 12)
 }
 \arguments{
 \item{url}{The URL do download (or get a cached copy of)}
@@ -24,7 +24,4 @@ folder inside your project (the currently fixed path is determined by
 \code{here("gitpins")}), and then returns the full file name name of the
 local file, which can be passed as an argument to any function that
 expects to read such a file.
-
-The \code{gitpin()} function is provided as an alias for \code{pin()}, to address
-naming conflicts (for example with \code{\link[pins:pin]{pins::pin()}}).
 }

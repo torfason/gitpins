@@ -13,7 +13,7 @@
 #' @description
 #' `r desc::desc_get("Description")`
 #'
-#' To get started, check out the help for the [gitpin()] function, or take a
+#' To get started, check out the help for the [pin()] function, or take a
 #' look at the info on GitHub (see links below).
 #'
 #'

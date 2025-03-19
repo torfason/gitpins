@@ -11,7 +11,7 @@ Repeated downloads are versioned using a local git repository,
 and if getting a document from the web is not successful, a
 previous local download is made available.
 
-To get started, check out the help for the \code{\link[=gitpin]{gitpin()}} function, or take a
+To get started, check out the help for the \code{\link[=pin]{pin()}} function, or take a
 look at the info on GitHub (see links below).
 }
 \seealso{

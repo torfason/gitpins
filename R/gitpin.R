@@ -134,15 +134,13 @@ pin <- function(url, refresh_hours=12) {
   destfile_data
 }
 
-#' The gitpin() function is an alias for pin()
-#'
-#' The `gitpin()` function is provided as an alias for `pin()`, to address
+#' The `gp_pin()` function is provided as an alias for `pin()`, to address
 #' naming conflicts (for example with [pins::pin()]).
 #'
-#' @name pin
+#' @rdname pin
 #'
 #' @export
-gitpin <- pin
+gp_pin <- pin
 
 
 #' List available pins
@@ -151,7 +149,7 @@ gitpin <- pin
 #' @return A `data.frame` with the timestamps and urls of available pins.
 #'
 #' @export
-list_pins <- function(history=FALSE) {
+gp_list <- function(history=FALSE) {
   assert_flag(history)
 
   gp_init()
@@ -192,8 +190,7 @@ list_pins <- function(history=FALSE) {
 }
 
 #' Clearing old pins is not currently implemented
-#' @md
 #' @keywords internal
-clear_old_pins <- function() {
+gp_clear <- function() {
   stop("not implemented")
 }
