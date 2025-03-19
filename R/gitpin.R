@@ -29,17 +29,17 @@ fstamp <- function(the_datetime) {
 
 #' Initialize gitpins repository
 #'
-#' This function is called automatically as needed and should not
-#' need to be called by the user. Note, however that to set a non-standard
-#' directory for the pinned files, this function must be called before
-#' any other functions.
+#' This function is generally called automatically as needed. Note, however,
+#' that to set a non-standard directory for the pinned files, this function must
+#' be called before any other functions.
 #'
+#' @param ... Reserved. All arguments must be named.
 #' @param options A `gp_options()` object, used in particular to select
 #'   the directory for storing the pins (defaults to `here::here("gitpins")`).
 #' @return The path to the repository
-#' @md
-#' @keywords internal
-init_gitpins <- function(..., options = gp_options()) {
+#'
+#' @export
+gp_init <- function(..., options = gp_options()) {
 
   # Verify inputs
   assert_dots_empty()
@@ -50,6 +50,7 @@ init_gitpins <- function(..., options = gp_options()) {
   gert::git_config_set(repo=.globals$repo, "user.name", "Git Pins")
   gert::git_config_set(repo=.globals$repo, "user.email", "gitpins@zulutime.net")
 }
+
 
 #' Download URL, add to gitpins repository, and return filename
 #'
@@ -64,7 +65,6 @@ init_gitpins <- function(..., options = gp_options()) {
 #'   before downloading a new version.
 #' @return The path of the locally downloaded file
 #'
-#' @md
 #' @export
 pin <- function(url, refresh_hours=12) {
   assert_string(url)
@@ -75,7 +75,7 @@ pin <- function(url, refresh_hours=12) {
   recent_version_found <- FALSE
 
   # Initialize variables
-  init_gitpins()
+  gp_init()
   stopifnot(!is.null(url) && is.character(url) && length(url)==1)
   url_hash <- digest::digest(url)
   timestamp <-  Sys.time()
@@ -140,7 +140,7 @@ pin <- function(url, refresh_hours=12) {
 #' naming conflicts (for example with [pins::pin()]).
 #'
 #' @name pin
-#' @md
+#'
 #' @export
 gitpin <- pin
 
@@ -150,12 +150,11 @@ gitpin <- pin
 #' @param history Should full (git) history be returned?
 #' @return A `data.frame` with the timestamps and urls of available pins.
 #'
-#' @md
 #' @export
 list_pins <- function(history=FALSE) {
   assert_flag(history)
 
-  init_gitpins()
+  gp_init()
 
   # Function to return empty data.frame on fresh repo instead of erroring
   get_repo_log_messages <- function(the_repo) {

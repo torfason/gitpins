@@ -2,19 +2,19 @@
 test_that("init_gitpins() works", {
 
   # Default options
-  init_gitpins() |>
+  gp_init() |>
     expect_silent()
   expect_true(fs::dir_exists(here::here("gitpins")))
 
   # Custom options
   opt_arg <- gp_options(pin_directory = here::here("gitpins_arg"))
-  init_gitpins(options = opt_arg) |>
+  gp_init(options = opt_arg) |>
     expect_silent()
   expect_true(fs::dir_exists(here::here("gitpins_arg")))
 
   # Get directory from r options
   withr::with_options(list(gitpins.pin_directory = here::here("gitpins_opts")), {
-    init_gitpins() |>
+    gp_init() |>
       expect_silent()
     expect_true(fs::dir_exists(here::here("gitpins_arg")))
   })

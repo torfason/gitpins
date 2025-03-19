@@ -16,10 +16,10 @@ gp_options(
 for the pin repo}
 }
 \value{
-A list representing the `gp_options` object.
+A list representing the \code{gp_options} object.
 }
 \description{
-Constructs a `gp_options` object with configurable parameters.
-  The parameters can be set from the defaults, from R options, or directly
-  when the options object is created.
+Constructs a \code{gp_options} object with configurable parameters.
+The parameters can be set from the defaults, from R options, or directly
+when the options object is created.
 }

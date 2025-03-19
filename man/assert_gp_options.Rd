@@ -13,9 +13,9 @@ assert_gp_options(x)
 Unchanged input if valid, otherwise an error is thrown.
 }
 \description{
-Verifies that `x` is a `gp_options` object (of class
-  `gitpins_gp_options`) and that all elements of the object are
-  valid for such an object. Use `gp_options()` to create `gp_options`
-  objects.
+Verifies that \code{x} is a \code{gp_options} object (of class
+\code{gitpins_gp_options}) and that all elements of the object are
+valid for such an object. Use \code{gp_options()} to create \code{gp_options}
+objects.
 }
 \keyword{internal}
