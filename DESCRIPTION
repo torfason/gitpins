@@ -16,6 +16,7 @@ Imports:
     digest,
     gert,
     here,
+    rlang,
     jsonlite,
     checkmate
 Suggests: 
