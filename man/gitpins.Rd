@@ -2,8 +2,8 @@
 % Please edit documentation in R/0_gitpins-package.R
 \docType{package}
 \name{gitpins}
-\alias{gitpins}
 \alias{gitpins-package}
+\alias{gitpins}
 \title{gitpins: Pin urls to local file and version with git}
 \description{
 Pin URLs to local file and version the pins with git.
