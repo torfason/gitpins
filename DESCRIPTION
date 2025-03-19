@@ -16,6 +16,7 @@ Imports:
     digest,
     gert,
     here,
+    lubridate,
     rlang,
     jsonlite,
     checkmate
