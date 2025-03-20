@@ -7,3 +7,6 @@
 ^\.github$
 ^.lintr$
 ^gitpins_.*$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
