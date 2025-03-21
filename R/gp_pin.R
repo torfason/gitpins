@@ -1,5 +1,4 @@
 
-.globals <- new.env()
 
 #' Convert date-time variable to sub-millisecond timestamp
 #'
@@ -14,6 +13,7 @@ tstamp <- function(the_datetime) {
   strftime(the_datetime, "%Y-%m-%d %H:%M:%OS5")
 }
 
+
 #' Convert date-time variable to file-compatible timestamp
 #'
 #' @param the_datetime a date variable
@@ -25,30 +25,6 @@ fstamp <- function(the_datetime) {
   assert_posixct(the_datetime)
 
   strftime(the_datetime, "%Y-%m-%d.%H%M%S")
-}
-
-#' Initialize gitpins repository
-#'
-#' This function is generally called automatically as needed. Note, however,
-#' that to set a non-standard directory for the pinned files, this function must
-#' be called before any other functions.
-#'
-#' @param ... Reserved. All arguments must be named.
-#' @param options A `gp_options()` object, used in particular to select
-#'   the directory for storing the pins (defaults to `here::here("gitpins")`).
-#' @return The path to the repository
-#'
-#' @export
-gp_init <- function(..., options = gp_options()) {
-
-  # Verify inputs
-  assert_dots_empty()
-  assert_gp_options(options)
-
-  .globals$repo <- options$pin_directory
-  gert::git_init(path=.globals$repo)
-  gert::git_config_set(repo=.globals$repo, "user.name", "Git Pins")
-  gert::git_config_set(repo=.globals$repo, "user.email", "gitpins@zulutime.net")
 }
 
 
@@ -142,55 +118,3 @@ pin <- function(url, refresh_hours=12) {
 #' @export
 gp_pin <- pin
 
-
-#' List available pins
-#'
-#' @param history Should full (git) history be returned?
-#' @return A `data.frame` with the timestamps and urls of available pins.
-#'
-#' @export
-gp_list <- function(history=FALSE) {
-  assert_flag(history)
-
-  gp_init()
-
-  # Function to return empty data.frame on fresh repo instead of erroring
-  get_repo_log_messages <- function(the_repo) {
-    tryCatch({
-      gert::git_log(repo=.globals$repo)$message
-    }, error=function(cond) {
-      character()
-    })
-  }
-
-  if (!history) {
-    # Return result based on what is in the working copy
-    d.result <- list.files(.globals$repo, pattern="*.json", full.names = TRUE) |>
-      lapply(readLines) |>
-      lapply(jsonlite::fromJSON) |>
-      lapply(as.data.frame) |>
-      do.call(what=rbind)
-    if (is.null(d.result)) d.result <- data.frame(timestamp=character(), url=character())
-    d.result <- d.result[order(d.result$timestamp, decreasing=TRUE), ]
-  } else {
-    # Return result based on what is in the gitlog
-    logmessages <- get_repo_log_messages()
-    d.result <- data.frame(
-      timestamp = gsub("\\[(.*)\\].*", "\\1", logmessages),
-      url = gsub(".*\\] (.*)", "\\1", logmessages) |>
-        sub(pattern="\\n", replacement="")
-    )
-  }
-
-  # Be nice and return a tibble if it is available
-  if (requireNamespace("tibble")) {
-    d.result <- tibble::as_tibble(d.result)
-  }
-  d.result
-}
-
-#' Clearing old pins is not currently implemented
-#' @keywords internal
-gp_clear <- function() {
-  stop("not implemented")
-}

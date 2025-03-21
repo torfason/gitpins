@@ -1,4 +1,8 @@
 
+## Per-session global variables are stored in .globals environment
+.globals <- new.env()
+
+
 ## Package documentation file.
 ##
 ## The file name is prefixed with `0_` , to ensure that it is processed first,

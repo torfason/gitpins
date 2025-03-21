@@ -30,7 +30,7 @@ test_that("gitpins work with local server", {
   }
 
   # Set here with reference to the test file
-  here::i_am("tests/testthat/test-gitpin-local.R") |> expect_message("gitpins")
+  here::i_am("tests/testthat/test-gp_pin-local.R") |> expect_message("gitpins")
 
   # If here does not get us the path to the local www_root, we panic
   if (!file.exists(here::here("tests", "www_root")))
