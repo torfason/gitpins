@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gitpins</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -52,7 +53,7 @@
 
 <p>Pin URLs to local file and version the pins with git. Repeated downloads are versioned using a local git repository, and if getting a document from the web is not successful, a previous local download is made available.</p>
 <div class="section level2">
-<h2 id="the-problem">The problem<a class="anchor" aria-label="anchor" href="#the-problem"></a>
+<h2 id="the-problem">The Problem<a class="anchor" aria-label="anchor" href="#the-problem"></a>
 </h2>
 <p>You want to quickly and easily process an online resource using R functions, some of which only accept local files. Thus you would like the following properties for your workflow:</p>
 <ul>
@@ -65,10 +66,21 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="the-solution">The solution<a class="anchor" aria-label="anchor" href="#the-solution"></a>
+<h2 id="the-solution">The Solution<a class="anchor" aria-label="anchor" href="#the-solution"></a>
 </h2>
-<p>The <code>gitpins</code> package downloads a URL to a local file in the <code>gitpins</code> folder inside your project (the currently fixed path is determined by <code>here("gitpins")</code>), and then returns the full file name name of the local file, which can be passed as an argument to any function that expects to read such a file.</p>
+<p>The <code>gitpins</code> package downloads a URL to a local file in the <code>gitpins</code> folder (defaults to <code>here::here("gitpins")</code>, but can be configured using <code><a href="reference/gp_options.html">gp_options()</a></code>), and then returns the full file name name of the local file, which can be passed as an argument to any function that expects to read such a file.</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install <code>gitpins</code> using <code>pak</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"torfason/gitpins"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Downloads on first try</span></span>
 <span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="st">"https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -81,7 +93,7 @@
 <span><span class="co">#&gt; 5        5           AI             Anguilla 1985              .ai</span></span>
 <span><span class="co">#&gt; 6        6           AL              Albania 1974              .al</span></span></code></pre></div>
 <p>You can maintain as many resources as you need:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Another resource</span></span>
 <span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="st">"https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -95,14 +107,14 @@
 <span><span class="co">#&gt; 6        6 1749.417  83.5</span></span></code></pre></div>
 <p>The file is downloaded the first time you run <code><a href="reference/pin.html">pin()</a></code> on a given URL (the actual download is done with <code><a href="https://jeroen.r-universe.dev/curl/reference/curl_download.html" class="external-link">curl::curl_download()</a></code>). After that, it checks to see the age of the local file and re-downloads if it is to old. The default refresh interval is 12 hours, but is configurable with a parameter.</p>
 <p>Note that the return value of the <code><a href="reference/pin.html">pin()</a></code> function is simply the full path to the local copy of the file. You can therefore use <code><a href="reference/pin.html">pin()</a></code> with the original URL wherever you would have used the local path of the resource. The exact name of the file is constructed in a deterministic way based on the URL (specifically, the base name is the <code>digest()</code> of the URL).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Uses a cached copy if a recent one is available (start of the url changed for privacy)</span></span>
 <span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="st">"https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern<span class="op">=</span><span class="st">".*/(gitpins/.*)"</span>, replacement<span class="op">=</span><span class="st">"/home/user/project/\\1"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; pin() found recent version, using it ...</span></span>
 <span><span class="co">#&gt; [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"</span></span></code></pre></div>
-<p>The refresh interval is configured with the <code>refresh_hours</code> parameter. Use <code>refresh_hours=0</code> to force a download on every call, and <code>refresh_hours=Inf</code> to always use the local copy (after the first download).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The refresh interval is configured with the <code>refresh_hours</code> parameter. Use <code>refresh_hours=0</code> to force a download on every call, and <code>refresh_hours=Inf</code> to always use the local copy (after the first download). A helper function, <code><a href="reference/gp_dropper.html">gp_dropper()</a></code> is provided for the case where a new version of the resource “drops” at the same time every day. The function allows you to set a lower interval in a given time window after the expected drop time, to maximize the probability that an updated version gets downloaded quickly.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Force a reload by specifying zero refresh time</span></span>
 <span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="st">"https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv"</span>,</span>
 <span>       refresh_hours <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -115,47 +127,59 @@
 <span>       refresh_hours <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern<span class="op">=</span><span class="st">".*/(gitpins/.*)"</span>, replacement<span class="op">=</span><span class="st">"/home/user/project/\\1"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; pin() found recent version, using it ...</span></span>
+<span><span class="co">#&gt; [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"</span></span>
+<span></span>
+<span><span class="co"># Set a lower interval for a given time window after a resource update "drops"</span></span>
+<span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="st">"https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv"</span>,</span>
+<span>       refresh_hours <span class="op">=</span> <span class="fu"><a href="reference/gp_dropper.html">gp_dropper</a></span><span class="op">(</span>drop_hour <span class="op">=</span> <span class="fl">12</span>, drop_tz <span class="op">=</span> <span class="st">"US/Eastern"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern<span class="op">=</span><span class="st">".*/(gitpins/.*)"</span>, replacement<span class="op">=</span><span class="st">"/home/user/project/\\1"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; pin() found recent version, using it ...</span></span>
 <span><span class="co">#&gt; [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"</span></span></code></pre></div>
 <p>The <code>gitpins</code> directory is actually a local <code>git</code> repository, and each new version is committed to the repository. That way, a complete history of the downloads is kept, but if the resource is not changing a lot, this history will not take up an inordinate amount of space (because of the deduplication properties of <code>git</code>).</p>
 <p>If the resource gets borked, you can retrieve older versions using git. A function is provided to list available pins (with or without history), but beyond that, the user is expected to use <code>git</code> directly for more complex retrieval operations.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">list_pins</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required namespace: tibble</span></span>
-<span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span><span class="co">#&gt;   timestamp                 url                                                                          </span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;chr&gt;                                                                        </span></span>
-<span><span class="co">#&gt; 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv </span></span>
-<span><span class="co">#&gt; 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv</span></span>
-<span><span class="fu">list_pins</span><span class="op">(</span>history <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 3 × 2</span></span>
-<span><span class="co">#&gt;   timestamp                 url                                                                          </span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;chr&gt;                                                                        </span></span>
-<span><span class="co">#&gt; 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv </span></span>
-<span><span class="co">#&gt; 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv</span></span>
-<span><span class="co">#&gt; 3 2024-03-28 16:33:23.27699 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>Install <code>gitpins</code> with either of the following commands:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"torfason/gitpins"</span><span class="op">)</span></span>
-<span><span class="co"># or alternatively</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"torfason/gitpins"</span><span class="op">)</span></span></code></pre></div>
-<p>You can then load and use the package like this:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/torfason/gitpins" class="external-link">gitpins</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/pin.html">pin</a></span><span class="op">(</span><span class="va">URL</span><span class="op">)</span></span></code></pre></div>
-<p>To use this concurrently with another package that also defines a <code><a href="reference/pin.html">pin()</a></code> function, exclude this function and use the alias <code>gitpin()</code> instead:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/torfason/gitpins" class="external-link">gitpins</a></span>, exclude<span class="op">=</span><span class="st">"pin"</span><span class="op">)</span></span>
-<span><span class="fu">gitpin</span><span class="op">(</span><span class="va">URL</span><span class="op">)</span></span></code></pre></div>
-<p>Note that <code>gitpins</code> uses the native pipe operator (<code>|&gt;</code>) and so depends on <code>R (&gt;= 4.1.0)</code>. If this is an issue for you, holler and I can probably be convinced of changing it to make it compatible with older versions.</p>
+<code class="sourceCode R"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_options.html" class="external-link">with_options</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="reference/gp_list.html">gp_list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="reference/gp_list.html">gp_list</a></span><span class="op">(</span>history <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required namespace: tibble</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 2</span></span>
+<span><span class="co">#&gt;   timestamp                 url                                                 </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;chr&gt;                                               </span></span>
+<span><span class="co">#&gt; 1 2025-03-21 18:28:24.10695 https://vincentarelbundock.github.io/Rdatasets/csv/…</span></span>
+<span><span class="co">#&gt; 2 2025-03-21 18:28:23.92979 https://vincentarelbundock.github.io/Rdatasets/csv/…</span></span>
+<span><span class="co">#&gt; 3 2025-03-21 18:28:23.60490 https://vincentarelbundock.github.io/Rdatasets/csv/…</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="related-packages-and-feedback">Related packages and feedback<a class="anchor" aria-label="anchor" href="#related-packages-and-feedback"></a>
+<h2 id="function-name-conflicts">Function Name Conflicts<a class="anchor" aria-label="anchor" href="#function-name-conflicts"></a>
 </h2>
-<p>This package was inspired by the <code>pins</code> package, and in particular the <code>pins::pin()</code> function. However, that function stores the actual local file in a system location rather than inside the project, so using it did not prove reliable reliable. Furthermore, it did not have the desired versioning properties, and finally, it is now defined as a legacy function and is not part of the new api for that package. As a result, <code>gitpins</code> was born.</p>
+<p>For use with with another package that also defines a <code><a href="reference/pin.html">pin()</a></code> function (such as the <code>pins</code> package), the <code>conflicted</code> package comes highly recommended, but the <code>exclude</code> option of the <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> function is also a valid approach. In either case, the <code><a href="reference/pin.html">gp_pin()</a></code> function is provided as an alias for <code><a href="reference/pin.html">pin()</a></code> so you don’t need to specify the full package name on each call:</p>
+<div class="section level3">
+<h3 id="using-conflicted">Using <code>conflicted</code>
+<a class="anchor" aria-label="anchor" href="#using-conflicted"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
+<span><span class="fu">conflicts_prefer</span><span class="op">(</span><span class="fu">pins</span><span class="fu">::</span><span class="fu">pin</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pins.rstudio.com/" class="external-link">pins</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/torfason/gitpins" class="external-link">gitpins</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/pin.html">gp_pin</a></span><span class="op">(</span><span class="va">URL</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="using-exclude">Using <code>exclude</code>
+<a class="anchor" aria-label="anchor" href="#using-exclude"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pins.rstudio.com/" class="external-link">pins</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/torfason/gitpins" class="external-link">gitpins</a></span>, exclude<span class="op">=</span><span class="st">"pin"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/pin.html">gp_pin</a></span><span class="op">(</span><span class="va">URL</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="related-packages-system-requirements-and-feedback">Related Packages, System Requirements, and Feedback<a class="anchor" aria-label="anchor" href="#related-packages-system-requirements-and-feedback"></a>
+</h2>
+<p>This package was inspired by the <code>pins</code> package, and in particular the <code>pins::pin()</code> function. However, that function stores the actual local file in a system location rather than inside the project, so using it did not prove reliable. Furthermore, it did not have the desired versioning properties, and finally, it is now defined as a legacy function and is not part of the new api for that package. As a result, <code>gitpins</code> was born.</p>
+<p>Note that <code>gitpins</code> uses the native pipe operator (<code>|&gt;</code>) and so depends on <code>R (&gt;= 4.1.0)</code>.</p>
 <p>For feature requests, bugs, or other feedback, feel free to file an issue.</p>
 </div>
 </div>
@@ -193,7 +217,6 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/torfason/gitpins/actions" class="external-link"><img src="https://github.com/torfason/gitpins/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
