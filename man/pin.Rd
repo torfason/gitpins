@@ -10,7 +10,7 @@ pin(url, refresh_hours = 12)
 gp_pin(url, refresh_hours = 12)
 }
 \arguments{
-\item{url}{The URL do download (or get a cached copy of)}
+\item{url}{The URL do download (or get a cached copy of).}
 
 \item{refresh_hours}{How old, in hours, can the locally cached copy be
 before downloading a new version.}

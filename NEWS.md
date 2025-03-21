@@ -1,5 +1,5 @@
 
-Version 0.3.9003
+Version 0.2.0
 ================
 
 - Custom location for the `gitpin` directory using `gp_options()`
@@ -11,7 +11,7 @@ Version 0.3.9003
   and `gp_dropper()`
 
 
-Version 0.3.0
+Version 0.1.0
 =============
 
 - Initial release.

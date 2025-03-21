@@ -36,7 +36,7 @@ fstamp <- function(the_datetime) {
 #' local file, which can be passed as an argument to any function that
 #' expects to read such a file.
 #'
-#' @param url The URL do download (or get a cached copy of)
+#' @param url The URL do download (or get a cached copy of).
 #' @param refresh_hours How old, in hours, can the locally cached copy be
 #'   before downloading a new version.
 #' @return The path of the locally downloaded file
