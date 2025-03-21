@@ -2,7 +2,7 @@
 % Please edit documentation in R/gp_options.R
 \name{gp_options}
 \alias{gp_options}
-\title{Create a gp_options Object}
+\title{Create a \code{gp_options} Object}
 \usage{
 gp_options(
   ...,
@@ -13,7 +13,8 @@ gp_options(
 \item{...}{Reserved. All arguments must be named.}
 
 \item{pin_directory}{A character string specifying the directory to use
-for the pin repo}
+for the pin directory (the local git repository where downloaded resources
+are stored and versioned).}
 }
 \value{
 A list representing the \code{gp_options} object.

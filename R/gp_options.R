@@ -1,12 +1,13 @@
 
 
-#' @title Create a gp_options Object
+#' @title Create a `gp_options` Object
 #' @description Constructs a `gp_options` object with configurable parameters.
 #'   The parameters can be set from the defaults, from R options, or directly
 #'   when the options object is created.
 #' @param ... Reserved. All arguments must be named.
 #' @param pin_directory A character string specifying the directory to use
-#'   for the pin repo
+#'   for the pin directory (the local git repository where downloaded resources
+#'   are stored and versioned).
 #' @return A list representing the `gp_options` object.
 #' @export
 gp_options <- function(...,
@@ -27,12 +28,12 @@ gp_options <- function(...,
 }
 
 
-#' @title Verify that x is a valid gp_options object
+#' @title Verify that x is a valid `gp_options` object
 #' @description Verifies that `x` is a `gp_options` object (of class
 #'   `gitpins_gp_options`) and that all elements of the object are
 #'   valid for such an object. Use `gp_options()` to create `gp_options`
 #'   objects.
-#' @param x An object to verify
+#' @param x An object to verify.
 #' @return Unchanged input if valid, otherwise an error is thrown.
 #' @keywords internal
 assert_gp_options <- function(x) {

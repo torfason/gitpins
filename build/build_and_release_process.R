@@ -5,9 +5,10 @@
   if (file.exists(gpdir)) {
     file.rename(gpdir, paste0(gpdir,"_",gitpins:::fstamp(Sys.time())))
   }
-  devtools::build()
   devtools::document()
+  devtools::build()
   devtools::build_readme()
+  devtools::build_site()
   devtools::test()
   message("Build OK")
 }

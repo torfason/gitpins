@@ -18,6 +18,7 @@ look at the info on GitHub (see links below).
 Useful links:
 \itemize{
   \item \url{https://github.com/torfason/gitpins}
+  \item \url{https://torfason.github.io/gitpins/}
   \item Report bugs at \url{https://github.com/torfason/gitpins/issues}
 }
 

@@ -5,7 +5,6 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/torfason/gitpins/workflows/R-CMD-check/badge.svg)](https://github.com/torfason/gitpins/actions)
 [![R-CMD-check](https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/torfason/gitpins/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -14,7 +13,7 @@ are versioned using a local git repository, and if getting a document
 from the web is not successful, a previous local download is made
 available.
 
-## The problem
+## The Problem
 
 You want to quickly and easily process an online resource using R
 functions, some of which only accept local files. Thus you would like
@@ -28,13 +27,23 @@ the following properties for your workflow:
 - Not ruin your local copy if the online version should change in a
   “bad” way
 
-## The solution
+## The Solution
 
 The `gitpins` package downloads a URL to a local file in the `gitpins`
-folder inside your project (the currently fixed path is determined by
-`here("gitpins")`), and then returns the full file name name of the
-local file, which can be passed as an argument to any function that
-expects to read such a file.
+folder (defaults to `here::here("gitpins")`, but can be configured using
+`gp_options()`), and then returns the full file name name of the local
+file, which can be passed as an argument to any function that expects to
+read such a file.
+
+## Installation
+
+Install `gitpins` using `pak`:
+
+``` r
+pak::pak("torfason/gitpins")
+```
+
+## Usage
 
 ``` r
 # Downloads on first try
@@ -90,7 +99,11 @@ pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.cs
 The refresh interval is configured with the `refresh_hours` parameter.
 Use `refresh_hours=0` to force a download on every call, and
 `refresh_hours=Inf` to always use the local copy (after the first
-download).
+download). A helper function, `gp_dropper()` is provided for the case
+where a new version of the resource “drops” at the same time every day.
+The function allows you to set a lower interval in a given time window
+after the expected drop time, to maximize the probability that an
+updated version gets downloaded quickly.
 
 ``` r
 # Force a reload by specifying zero refresh time
@@ -103,6 +116,13 @@ pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.cs
 # Always use local copy by specifying Inf refresh time
 pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
        refresh_hours = Inf) |>
+  gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
+#> pin() found recent version, using it ...
+#> [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"
+
+# Set a lower interval for a given time window after a resource update "drops"
+pin("https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv",
+       refresh_hours = gp_dropper(drop_hour = 12, drop_tz = "US/Eastern")) |>
   gsub(pattern=".*/(gitpins/.*)", replacement="/home/user/project/\\1")
 #> pin() found recent version, using it ...
 #> [1] "/home/user/project/gitpins/5ad1e570044be11330713642c682b9db.data"
@@ -120,62 +140,58 @@ but beyond that, the user is expected to use `git` directly for more
 complex retrieval operations.
 
 ``` r
-list_pins()
+withr::with_options(list(width = 130), {
+  gp_list()
+  gp_list(history = TRUE)
+})
 #> Loading required namespace: tibble
-#> # A tibble: 2 × 2
-#>   timestamp                 url                                                                          
-#>   <chr>                     <chr>                                                                        
-#> 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-list_pins(history = TRUE)
 #> # A tibble: 3 × 2
-#>   timestamp                 url                                                                          
-#>   <chr>                     <chr>                                                                        
-#> 1 2024-03-28 16:33:23.74682 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv 
-#> 2 2024-03-28 16:33:23.58968 https://vincentarelbundock.github.io/Rdatasets/csv/datasets/sunspot.month.csv
-#> 3 2024-03-28 16:33:23.27699 https://vincentarelbundock.github.io/Rdatasets/csv/openintro/country_iso.csv
+#>   timestamp                 url                                                 
+#>   <chr>                     <chr>                                               
+#> 1 2025-03-21 18:28:24.10695 https://vincentarelbundock.github.io/Rdatasets/csv/…
+#> 2 2025-03-21 18:28:23.92979 https://vincentarelbundock.github.io/Rdatasets/csv/…
+#> 3 2025-03-21 18:28:23.60490 https://vincentarelbundock.github.io/Rdatasets/csv/…
 ```
 
-## Installation
+## Function Name Conflicts
 
-Install `gitpins` with either of the following commands:
+For use with with another package that also defines a `pin()` function
+(such as the `pins` package), the `conflicted` package comes highly
+recommended, but the `exclude` option of the `library()` function is
+also a valid approach. In either case, the `gp_pin()` function is
+provided as an alias for `pin()` so you don’t need to specify the full
+package name on each call:
+
+### Using `conflicted`
 
 ``` r
-pak::pak("torfason/gitpins")
-# or alternatively
-remotes::install_github("torfason/gitpins")
-```
-
-You can then load and use the package like this:
-
-``` r
+library(conflicted)
+conflicts_prefer(pins::pin())
+library(pins)
 library(gitpins)
-pin(URL)
+gp_pin(URL)
 ```
 
-To use this concurrently with another package that also defines a
-`pin()` function, exclude this function and use the alias `gitpin()`
-instead:
+### Using `exclude`
 
 ``` r
+library(pins)
 library(gitpins, exclude="pin")
-gitpin(URL)
+gp_pin(URL)
 ```
 
-Note that `gitpins` uses the native pipe operator (`|>`) and so depends
-on `R (>= 4.1.0)`. If this is an issue for you, holler and I can
-probably be convinced of changing it to make it compatible with older
-versions.
-
-## Related packages and feedback
+## Related Packages, System Requirements, and Feedback
 
 This package was inspired by the `pins` package, and in particular the
 `pins::pin()` function. However, that function stores the actual local
 file in a system location rather than inside the project, so using it
-did not prove reliable reliable. Furthermore, it did not have the
-desired versioning properties, and finally, it is now defined as a
-legacy function and is not part of the new api for that package. As a
-result, `gitpins` was born.
+did not prove reliable. Furthermore, it did not have the desired
+versioning properties, and finally, it is now defined as a legacy
+function and is not part of the new api for that package. As a result,
+`gitpins` was born.
+
+Note that `gitpins` uses the native pipe operator (`|>`) and so depends
+on `R (>= 4.1.0)`.
 
 For feature requests, bugs, or other feedback, feel free to file an
 issue.

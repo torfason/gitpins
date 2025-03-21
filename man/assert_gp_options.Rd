@@ -2,12 +2,12 @@
 % Please edit documentation in R/gp_options.R
 \name{assert_gp_options}
 \alias{assert_gp_options}
-\title{Verify that x is a valid gp_options object}
+\title{Verify that x is a valid \code{gp_options} object}
 \usage{
 assert_gp_options(x)
 }
 \arguments{
-\item{x}{An object to verify}
+\item{x}{An object to verify.}
 }
 \value{
 Unchanged input if valid, otherwise an error is thrown.
